@@ -1,0 +1,64 @@
+<template>
+<!-- Exemplar title + hook scene. Cue times are absolute seconds on the voice track
+     (read them from vo/words.txt). START must equal this host's data-start in index.html. -->
+<style>/*COMMON_CSS*/
+#s1-paper{background:var(--paper)}
+#s1-video{position:absolute;left:0;top:0;width:1920px;height:1080px;object-fit:cover} /* only used if you swap in a hero video */
+#s1-title{position:absolute;left:0;right:0;top:170px;text-align:center}
+#s1-title .eyebrow{color:rgba(34,39,37,.72)}
+#s1-h1{font-size:172px;line-height:.98;margin-top:22px;color:#1C211F}
+#s1-note{position:absolute;left:0;right:0;top:640px;text-align:center;font-size:66px}
+#s1-under{left:640px;top:420px;width:640px;height:40px}
+#s1-sheet{position:absolute;left:0;top:0;width:1920px;height:1080px;background:var(--paper)}
+#s1-q-eyebrow{position:absolute;left:120px;top:110px}
+#s1-big{position:absolute;left:112px;top:240px;font-size:160px;line-height:1}
+#s1-years{position:absolute;left:120px;top:470px;font-size:84px}
+#s1-years .num{color:var(--marker)}
+#s1-quote{position:absolute;left:120px;top:780px;width:1700px}
+#s1-quote .serif{font-size:96px;line-height:1}
+#s1-quote .who{font-size:32px;font-weight:600;color:var(--muted);margin-top:18px;letter-spacing:.04em}
+</style>
+<div id="root" data-composition-id="s1" data-width="1920" data-height="1080" data-duration="12">
+  <div id="s1-paper" class="fill"></div>
+  <div id="s1-world" class="cam">
+    <!-- Hero: CSS gradient by default. To use a video, replace this div with
+         <video id="s1-video" class="clip" src="assets/media/hero.mp4" muted playsinline data-start="0" data-duration="6.6" data-playback-rate="0.5" data-track-index="0"></video>
+         and remove the #s1-hero tween below (never animate a <video> directly). -->
+    <div id="s1-hero" class="hero"></div>
+    <div id="s1-title">
+      <div class="eyebrow" id="s1-eye">Pre-meeting brief · DAY, MON DD</div>
+      <div id="s1-h1" class="serif">{{W:CLIENT alignment}}<br>{{W:brief.}}</div>
+      <svg class="ink" id="s1-under" viewBox="0 0 640 40"><path id="s1-under-p" d="M8 26 C 160 12, 420 10, 632 22" pathLength="1" stroke="#C84028" stroke-width="9" stroke-dasharray="1 2" stroke-dashoffset="1"/></svg>
+    </div>
+    <div id="s1-note" class="hand">before the DAY call with NAME</div>
+  </div>
+  <div id="s1-sheet">
+    <div id="s1-qwrap">
+      <div class="eyebrow" id="s1-q-eyebrow">NAME, DATE call</div>
+      <div id="s1-big" class="serif num">BIG FACT</div>
+      <div id="s1-years" class="serif">for <span class="num" id="s1-yr">0</span> years.</div>
+      <div id="s1-quote"><div class="serif">{{W:“A real quote, verbatim.”}}</div><div class="who" id="s1-who">Full Name</div></div>
+    </div>
+  </div>
+</div>
+<script src="assets/vendor/gsap.min.js"></script>
+<script>(function(){ const START = 0;
+//COMMON_JS
+// slow drift keeps the gradient hero alive while the title holds
+tl.fromTo("#s1-hero", { scale: 1, x: 0 }, { scale: 1.06, x: -40, duration: 6.6, ease: "none" }, 0);
+tl.fromTo("#s1-eye", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.6, ease: "expo.out" }, 0.2);
+words("#s1-h1", 0.35, 0.11);
+reveal("#s1-note", 1.7, 0.9);
+draw("#s1-under-p", 3.2, 0.55);
+// site-like scroll: the paper sheet slides up while the hero parallaxes away
+tl.fromTo("#s1-sheet", { y: 1080 }, { y: 0, duration: 0.65, ease: "power3.inOut" }, 5.9);
+tl.to("#s1-world", { y: -420, duration: 0.65, ease: "power3.inOut" }, 5.9);
+tl.fromTo("#s1-q-eyebrow", { opacity: 0 }, { opacity: 1, duration: 0.5 }, T(6.6));
+rise("#s1-big", 7.0, { y: 40, d: 0.8 });
+rise("#s1-years", 8.0, { y: 20 });
+count("#s1-yr", 0, 15, 8.2, 0.7, v => Math.round(v));
+words("#s1-quote", 9.6, 0.09);
+tl.fromTo("#s1-who", { opacity: 0 }, { opacity: 1, duration: 0.4 }, T(9.9));
+exitAll("#s1-qwrap", 11.7);
+window.__timelines["s1"] = tl; })();</script>
+</template>

@@ -1,0 +1,83 @@
+<template>
+<!-- Exemplar data scene: ticker cards with count-ups, a before/after pair with a badge,
+     a bar chart with a hand note, and a sparkline card. Swap labels, values and cue times. -->
+<style>/*COMMON_CSS*/
+#s2-base{background:var(--paper)}
+#s2-eye{position:absolute;left:120px;top:84px}
+.s2-tick{position:absolute;top:140px;width:396px;--pad:28px 34px}
+.s2-tick .serif{font-size:64px;line-height:1}
+.s2-tick .lab{font-size:30px;font-weight:500;color:var(--muted);margin-top:10px}
+#s2-yoy{left:120px;top:360px;width:600px;height:620px;--pad:40px 44px}
+#s2-yoy .t{font-size:32px;font-weight:600;color:var(--muted)}
+.s2-pair{display:flex;align-items:flex-end;gap:16px;margin-top:40px}
+.s2-pair .serif{font-size:96px;line-height:1}
+.s2-pair .yr{font-size:28px;color:var(--muted);font-weight:600;margin-top:8px}
+#s2-arr{font-size:70px;color:var(--muted);padding-bottom:40px}
+#s2-badge{position:absolute;left:44px;top:376px;background:var(--yellow);font-family:"YS";font-size:88px;padding:14px 40px;border-radius:100px}
+#s2-badge-l{position:absolute;left:46px;top:540px;font-size:30px;font-weight:600;color:var(--muted)}
+#s2-chart{left:760px;top:360px;width:1040px;height:620px;--pad:40px 44px}
+#s2-chart .t{font-family:"YS";font-size:44px}
+.s2-bar{position:absolute;bottom:96px;width:200px;border-radius:14px 14px 4px 4px;transform-origin:50% 100%}
+.s2-val{position:absolute;width:200px;text-align:center;font-family:"YS";font-size:64px}
+.s2-lab{position:absolute;bottom:40px;width:240px;text-align:center;white-space:nowrap;font-size:30px;font-weight:600}
+#s2-ba{left:110px;height:134px;background:var(--sky)}
+#s2-bb{left:420px;height:320px;background:var(--clay)}
+#s2-bc{left:730px;height:198px;background:var(--oat)}
+#s2-va{left:110px;bottom:240px} #s2-vb{left:420px;bottom:426px} #s2-vc{left:730px;bottom:304px}
+#s2-la{left:90px} #s2-lb{left:370px;width:300px} #s2-lc{left:710px}
+#s2-note{position:absolute;left:60px;top:150px;width:340px;text-align:right;font-size:46px;line-height:1.05;transform:rotate(-3deg)}
+</style>
+<div id="root" data-composition-id="s2" data-width="1920" data-height="1080" data-duration="18">
+  <div id="s2-base" class="fill"></div>
+  <div id="s2-mesh" class="fill mesh"></div>
+  <div id="s2-all">
+    <div class="eyebrow" id="s2-eye">SOURCE A + SOURCE B</div>
+    <div class="card s2-tick" id="s2-t1" style="left:120px"><div class="serif num" id="s2-n1">0</div><div class="lab">label one</div></div>
+    <div class="card s2-tick" id="s2-t2" style="left:540px"><div class="serif num" id="s2-n2">0</div><div class="lab">label two</div></div>
+    <div class="card s2-tick" id="s2-t3" style="left:960px"><div class="serif num" id="s2-n3">0</div><div class="lab">label three</div></div>
+    <div class="card s2-tick" id="s2-t4" style="left:1380px"><div class="serif num" id="s2-n4">0</div><div class="lab">label four</div></div>
+    <div class="card" id="s2-yoy">
+      <div class="t">Metric, year over year</div>
+      <div class="s2-pair">
+        <div id="s2-y1"><div class="serif num">1.18</div><div class="yr">last year</div></div>
+        <div id="s2-arr">→</div>
+        <div id="s2-y2"><div class="serif num" id="s2-nb">1.18</div><div class="yr">this year</div></div>
+      </div>
+      <div id="s2-badge" class="num">+20%</div>
+      <div id="s2-badge-l">what the change means</div>
+    </div>
+    <div class="card" id="s2-chart">
+      <div class="t">Chart title in plain words</div>
+      <div class="s2-bar" id="s2-ba"></div><div class="s2-bar" id="s2-bb"></div><div class="s2-bar" id="s2-bc"></div>
+      <div class="s2-val num" id="s2-va">0</div><div class="s2-val num" id="s2-vb">0</div><div class="s2-val num" id="s2-vc">0</div>
+      <div class="s2-lab" id="s2-la">Era A</div><div class="s2-lab" id="s2-lb">Era B, longer label</div><div class="s2-lab" id="s2-lc">Era C</div>
+      <div id="s2-note" class="hand">+$X a week<br>extra cost →</div>
+    </div>
+  </div>
+</div>
+<script src="assets/vendor/gsap.min.js"></script>
+<script>(function(){ const START = 12;
+//COMMON_JS
+// ground continuity: the previous scene ended on paper, so fade the mesh in over it
+tl.fromTo("#s2-mesh", { opacity: 0 }, { opacity: 1, duration: 0.7, ease: "power2.inOut" }, 0.02);
+tl.fromTo("#s2-eye", { opacity: 0 }, { opacity: 1, duration: 0.5 }, T(12.3));
+rise("#s2-t1", 12.6); count("#s2-n1", 0, 1240, 12.8, 1.6, fmtInt);
+rise("#s2-t2", 13.4); count("#s2-n2", 0, 3150, 13.6, 1.6, fmtInt);
+rise("#s2-t3", 14.2); count("#s2-n3", 0, 12400, 14.4, 1.6, fmtInt);
+rise("#s2-t4", 15.0); count("#s2-n4", 0, 48600, 15.2, 1.8, fmtInt);
+rise("#s2-yoy", 16.0, { y: 60, d: 0.8 });
+rise("#s2-y1", 16.2, { y: 16 });
+tl.fromTo("#s2-arr,#s2-y2", { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.5, ease: "expo.out" }, T(16.6));
+count("#s2-nb", 1.18, 1.42, 16.7, 0.8, v => v.toFixed(2));
+pop("#s2-badge", 17.0);
+tl.fromTo("#s2-badge-l", { opacity: 0 }, { opacity: 1, duration: 0.5 }, T(17.3));
+rise("#s2-chart", 16.4, { y: 60, d: 0.8 });
+tl.fromTo(".s2-lab", { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.1 }, T(16.8));
+tl.fromTo("#s2-ba", { scaleY: 0 }, { scaleY: 1, duration: 0.8, ease: "expo.out" }, T(17.0)); count("#s2-va", 0, 23, 17.0, 0.8, v => Math.round(v));
+tl.fromTo("#s2-bb", { scaleY: 0 }, { scaleY: 1, duration: 0.9, ease: "expo.out" }, T(17.2)); count("#s2-vb", 0, 55, 17.2, 0.9, v => Math.round(v));
+tl.fromTo("#s2-bc", { scaleY: 0 }, { scaleY: 1, duration: 0.85, ease: "expo.out" }, T(17.4)); count("#s2-vc", 0, 34, 17.4, 0.85, v => Math.round(v));
+reveal("#s2-note", 17.5, 0.4);
+drift("#s2-all", 18);
+exitAll("#s2-all", 17.65);
+window.__timelines["s2"] = tl; })();</script>
+</template>

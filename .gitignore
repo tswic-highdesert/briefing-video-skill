@@ -1,0 +1,12 @@
+.DS_Store
+__pycache__/
+*.pyc
+node_modules/
+.env
+.env.*
+# render outputs and takes if someone builds inside the repo
+renders/
+compositions/
+vo/voice.*
+vo/alignment.json
+vo/words.txt

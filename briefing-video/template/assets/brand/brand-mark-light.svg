@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="418" height="90" viewBox="0 0 418 90" role="img" aria-label="Brand mark placeholder">
+  <!-- Placeholder brand lockup. Replace with your own logo at 418x90 (or keep the aspect ratio). -->
+  <g fill="none" stroke="#F7F7F2" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="45" cy="45" r="36"/>
+    <path d="M24 54 C 34 30, 56 30, 66 54"/>
+    <circle cx="45" cy="30" r="5" fill="#F0D15A" stroke="none"/>
+  </g>
+  <text x="102" y="60" fill="#F7F7F2" font-family="Georgia, 'Times New Roman', serif" font-size="44" letter-spacing="0.5">Your Brand</text>
+</svg>
